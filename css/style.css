@@ -11,7 +11,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e7e3cc;
+  background: #f0eae4;
 
 }
 .container {
@@ -65,18 +65,17 @@ body {
   transition: left 1.8s ease;
 }
 
-.calc-screen {
+.calc_screen {
   display: flex;
   align-items:center;
   justify-content:end;
   height: 100px;
   width: 100%;
-  outline: none;
-  border: none;
   text-align: right;
   font-size: 32px;
   color: #fff;
   pointer-events: none;
+  user-select: none;
 }
 
 .buttons {

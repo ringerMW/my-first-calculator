@@ -1,0 +1,143 @@
+/* Import Google font - M PLUS 1 */
+  @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@600&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'M PLUS 1', sans-serif;
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7e3cc;
+
+}
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 270px;
+  width: 100%;
+  height: 500px;
+  border-radius: 30px;
+  background-color: #fff;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 23px 2px rgba(34, 60, 80, 0.17);
+  -moz-box-shadow: 0px 0px 23px 2px rgba(34, 60, 80, 0.17);
+  box-shadow: 0px 0px 23px 2px rgba(34, 60, 80, 0.17);
+}
+
+.wrapper_display {
+  padding: 20px 20px 10px 20px;
+  /* background-color: #ff9000; */
+  background: linear-gradient(310deg, #ff9000 60%, #f3bc74);
+  border-radius: 0 0 30px 0px;
+  -webkit-box-shadow: 0px -10px 26px -1px rgba(34, 60, 80, 0.2) inset;
+  -moz-box-shadow: 0px -10px 26px -1px rgba(34, 60, 80, 0.2) inset;
+  box-shadow: 0px -10px 26px -1px rgba(34, 60, 80, 0.1) inset;
+}
+
+.clock {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 25px;
+  text-align: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.time {
+  position: absolute;
+  left: 0;
+  transition: left 0.5s ease;
+  user-select: none;
+}
+
+.hide {
+  position: absolute;
+  left: -284px;
+  transition: left 1.8s ease;
+}
+
+.calc-screen {
+  display: flex;
+  align-items:center;
+  justify-content:end;
+  height: 100px;
+  width: 100%;
+  outline: none;
+  border: none;
+  text-align: right;
+  font-size: 32px;
+  color: #fff;
+  pointer-events: none;
+}
+
+.buttons {
+  display: grid;
+  grid-template-areas:
+  "ac plus-minus percent division"
+  "seven eight nine multiply"
+  "four five six minus"
+  "one two three plus"
+  "zero dot equal equal";
+  grid-gap: 20px;
+  justify-items: center;
+  padding: 0px 20px;
+  margin-top: 20px;
+}
+
+.btn {
+  width: 35px;
+  height: 35px;
+  color: #000;
+  border-radius: 20%;
+  font-size: 20px;
+  text-align: center;
+  line-height: 35px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn.equal {
+  grid-area: equal;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.button_delete {
+  margin-top: 20px;
+  display: flex;
+  align-items:center;
+  justify-content: end;
+  padding: 0 23px;
+}
+
+.del {
+  font-size: 14px;
+  height: 21px;
+  line-height: 19px;
+  border-radius: 10px;
+  color: #fff;
+  background: #ffb36b;
+}
+
+.operator {
+  color: #fff;
+  background: #ffb36b;
+  line-height: 32px;
+}
+
+.operator:hover, .del:hover {
+  background: #ff9000;
+}

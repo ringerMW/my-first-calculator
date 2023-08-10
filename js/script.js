@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	const action = ['-', '+', 'X', '/'];
 
 	// Сalc display 
-	const out = document.querySelector('.calc-screen p');
+	const out = document.querySelector('.calc_screen p');
 
 	// Clear all - button 'C'
 	function clearAll() {
@@ -91,7 +91,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		// если нажата кнопка + - / *
-		if (action.includes(key)) {
+		if (action.includes(key) && sign === '') {
 			sign = key;
 			out.textContent = a;
 			return

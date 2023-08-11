@@ -1,13 +1,13 @@
 window.addEventListener('DOMContentLoaded', () => {
 	//-- Clock --//
 	function currentTime() {
-		var date = new Date();
-		var hour = date.getHours();
-		var min = date.getMinutes();
+		let date = new Date();
+		let hour = date.getHours();
+		let min = date.getMinutes();
 		hour = updateTime(hour);
 		min = updateTime(min);
 		document.querySelector(".time").innerText = hour + " : " + min;
-		var t = setTimeout(function(){ currentTime() }, 1000);
+		let t = setTimeout(function(){ currentTime() }, 1000);
 	}
 	  
 	function updateTime(k) {
@@ -23,13 +23,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	// Hide/Unhide clock 
 	let btn = document.querySelector('.clock i');
-	let time = document.querySelector('.time');
+	let date_time = document.querySelector('.date_time');
 
 	function checkDisp() {
-		time.classList.toggle('hide');
+		date_time.classList.toggle('hide');
 	}
 
 	btn.addEventListener('click', checkDisp);
+
+	//-- Date --//
+	let date = new Date();
+	let dayWeek  = date.getDay();
+	let month = date.getMonth();
+	let days = [['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'], ['янв.', 'фев.', 'мар.', 'апр.', 'май', 'июн.', 'июл.', 'авг.', 'сен.', 'окт.', 'ноя.', 'дек.']];
+
+	let dateLine = document.querySelector('.date');
+
+	dateLine.textContent += `${days[0][dayWeek]}, ${date.getDate()} ${days[1][month]}`;
+
+
+
+
 
 	//-- Calc logic --//
 	let a = ''; // first number
@@ -39,6 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	const digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
 	const action = ['-', '+', 'X', '/'];
+	const otherAction = ['%', '+/-', '/', 'X', '-', '+', '='];
 
 	// Сalc display 
 	const out = document.querySelector('.calc_screen p');
@@ -60,13 +75,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		// The button is pressed - Clear All 'C'
 		if (event.target.classList.contains('C')) return;
 
-/* 		10 - 36
-		11 - 32
-		12 - 30
-		13 - 28
-		14 - 26
-		15 - 24
-		16 - 22 */
 		out.textContent = '';
 
 		// Get the pressed button
@@ -92,13 +100,39 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		// если нажата кнопка + - / *
 		if (action.includes(key) && sign === '') {
+			if (a === '') {
+				clearAll();
+				return
+			}
 			sign = key;
 			out.textContent = a;
 			return
 		}
+		// удаление последнего символа
+		if (key === 'del'){
+			if (b === '' && sign === '') {
+				a = a.substring(0, a.length - 1)
+				console.log(a, sign, b);
+				out.textContent = a;
+				if (a === '') {
+					clearAll();
+				}
+			} else if (b !== '') {
+				b = b.substring(0, b.length - 1)
+				out.textContent = b;
+				console.log(a, sign, b);
+				if (b === '') {
+					b = ''; // <- временная bug-a
+				}
+			}
+		}
 
 		// если нажата кнопка =
 		if (key === '=') {
+			if (a === '') {
+				clearAll();
+				return
+			}
 			if (b === '') b = a;
 			switch (sign) {
 				case '+':
@@ -168,7 +202,11 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		// если нажата кнопка '+/-'
-		if (key === '+/-' && !finish) {
+		if (key === '+/-') {
+			if (a === '') {
+				clearAll();
+				return
+			}
 			if (a !== '' && b === '') {
 				a = -(a);
 				out.textContent = a;
@@ -190,6 +228,10 @@ window.addEventListener('DOMContentLoaded', () => {
 		// %
 		if (key === '%') {
 			if (b === '' && sign === '') {
+				if (a === '') {
+					clearAll();
+					return
+				}
 				a = a / 100;
 				out.textContent = a;
 				console.log(a, sign, b);

@@ -52,9 +52,10 @@ body {
   color: #fff;
 }
 
-.time {
+.date_time {
   position: absolute;
   left: 0;
+  font-size: 14px;
   transition: left 0.5s ease;
   user-select: none;
 }
@@ -78,10 +79,10 @@ body {
   user-select: none;
 }
 
-.buttons {
+/* .buttons {
   display: grid;
   grid-template-areas:
-  "ac plus-minus percent division"
+  "ac percent plus-minus division"
   "seven eight nine multiply"
   "four five six minus"
   "one two three plus"
@@ -90,7 +91,44 @@ body {
   justify-items: center;
   padding: 0px 20px;
   margin-top: 20px;
+} */
+
+.buttons {  
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    "button_delete button_delete button_delete button_delete"
+    "ac percent plus-minus division"
+    "seven eight nine multiply"
+    "four five six minus"
+    "one two three plus"
+    "zero dot equal equal";
+  grid-gap: 20px;
+  justify-items: center;
+  padding: 0px 20px;
 }
+
+.button_delete { grid-area: button_delete; }
+.ac { grid-area: ac; }
+.percent { grid-area: percent; }
+.plus-minus { grid-area: plus-minus; }
+.division { grid-area: division; }
+.seven { grid-area: seven; }
+.eight { grid-area: eight; }
+.nine { grid-area: nine; }
+.multiply { grid-area: multiply; }
+.four { grid-area: four; }
+.five { grid-area: five; }
+.six { grid-area: six; }
+.minus { grid-area: minus; }
+.one { grid-area: one; }
+.two { grid-area: two; }
+.three { grid-area: three; }
+.plus { grid-area: plus; }
+.zero { grid-area: zero; }
+.dot { grid-area: dot; }
+.equal { grid-area: equal; }
 
 .btn {
   width: 35px;
@@ -115,11 +153,11 @@ body {
 }
 
 .button_delete {
-  margin-top: 20px;
+  width: 100%;
   display: flex;
-  align-items:center;
-  justify-content: end;
-  padding: 0 23px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 3px;
 }
 
 .del {

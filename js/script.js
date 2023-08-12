@@ -21,16 +21,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	  
 	currentTime();
 
-	// Hide/Unhide clock 
-	let btn = document.querySelector('.clock i');
-	let date_time = document.querySelector('.date_time');
-
-	function checkDisp() {
-		date_time.classList.toggle('hide');
-	}
-
-	btn.addEventListener('click', checkDisp);
-
 	//-- Date --//
 	let date = new Date();
 	let dayWeek  = date.getDay();

@@ -11,7 +11,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0eae4;
+  background: #ededed;
 
 }
 .container {
@@ -42,28 +42,15 @@ body {
 .clock {
   position: relative;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
   width: 100%;
   height: 25px;
+  font-size: 12px;
   text-align: center;
   overflow: hidden;
   color: #fff;
-}
-
-.date_time {
-  position: absolute;
-  left: 0;
-  font-size: 14px;
-  transition: left 0.5s ease;
-  user-select: none;
-}
-
-.hide {
-  position: absolute;
-  left: -284px;
-  transition: left 1.8s ease;
 }
 
 .calc_screen {
@@ -85,7 +72,7 @@ body {
   grid-template-rows: repeat(6, 1fr);
   grid-template-areas:
     "button_delete button_delete button_delete button_delete"
-    "ac percent plus-minus division"
+    "ac plus-minus percent division"
     "seven eight nine multiply"
     "four five six minus"
     "one two three plus"
@@ -97,8 +84,8 @@ body {
 
 .button_delete { grid-area: button_delete; }
 .ac { grid-area: ac; }
-.percent { grid-area: percent; }
 .plus-minus { grid-area: plus-minus; }
+.percent { grid-area: percent; }
 .division { grid-area: division; }
 .seven { grid-area: seven; }
 .eight { grid-area: eight; }

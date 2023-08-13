@@ -7,7 +7,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		hour = updateTime(hour);
 		min = updateTime(min);
 		document.querySelector(".time").innerText = hour + " : " + min;
-		let t = setTimeout(function(){ currentTime() }, 1000);
 	}
 	  
 	function updateTime(k) {
@@ -30,9 +29,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	let dateLine = document.querySelector('.date');
 
 	dateLine.textContent += `${days[0][dayWeek]}, ${date.getDate()} ${days[1][month]}`;
-
-
-
 
 
 	//-- Calc logic --//
@@ -62,6 +58,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	document.querySelector('.buttons .C').addEventListener('click', clearAll);
 
+	// Execution of operations : '+'  '-'  '/' '*'
 	function executeOperation(a, b, sign) {
 		switch (sign) {
 			case '+':
@@ -97,28 +94,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		// Get the pressed button
 		const key = event.target.textContent;
-		console.log(key);
 
-		// если нажата кнопка 0-9 или '.'
+		// if the pressed button 0-9 or '.'
 		if (digit.includes(key)) {
 			if (b === '' && sign === '') {
 				if (a === '0' && key !== '.') { // first number zero + dot
 					a = key;
 					input.value = a;
 					output.value = `${a} ${sign} ${b}`;
-					console.log(a, sign, b);
 					return;
 				}else if (key === '.') {
 					if (!a.length) {
 						a = '0.';
 						input.value = a;
 						output.value = `${a} ${sign} ${b}`;
-						console.log(a, sign, b);
 						return;
 					}else if (a.includes('.')) {
 						input.value = a;
 						output.value = `${a} ${sign} ${b}`;
-						console.log(a, sign, b);
 						return;
 					}
 				}
@@ -131,7 +124,6 @@ window.addEventListener('DOMContentLoaded', () => {
 					finish = false;
 					input.value = b;
 					output.value = `${a} ${sign} ${b}`;
-					console.log(a, sign, b);
 					return;
 				}
 				b = key;
@@ -143,19 +135,16 @@ window.addEventListener('DOMContentLoaded', () => {
 					b = key;
 					input.value = b;
 					output.value = `${a} ${sign} ${b}`;
-					console.log(a, sign, b);
 					return;
 				}else if (key === '.') {
 					if (!b.length) {
 						b = '0.';
 						input.value = b;
 						output.value = `${a} ${sign} ${b}`;
-						console.log(a, sign, b);
 						return;
 					}else if (b.includes('.')) {
 						input.value = b;
 						output.value = `${a} ${sign} ${b}`;
-						console.log(a, sign, b);
 						return;
 					}
 				}
@@ -164,27 +153,24 @@ window.addEventListener('DOMContentLoaded', () => {
 				input.value = b;
 				output.value = `${a} ${sign} ${b}`;
 			}
-			console.log(a, sign, b);
 			return;
 		}
 
-		// если нажата кнопка + - / *
+		// if the pressed button + - / *
 		if (action.includes(key) && b === '') {
 			if (a === '') {
 				clearAll();
-				return
+				return;
 			}
 			sign = key;
 			input.value = a;
 			output.value = `${a} ${sign} ${b}`;
-			console.log(a, sign, b);
-			return
+			return;
 		}
-		// удаление последнего символа
+		// delete last symbol
 		if (key === 'del'){
 			if (b === '' && sign === '' && !finish) {
-				a = String(a).substring(0, String(a).length - 1)
-				console.log(a, sign, b);
+				a = String(a).substring(0, String(a).length - 1);
 				input.value = a;
 				output.value = `${a} ${sign} ${b}`;
 				if (a === '') {
@@ -193,37 +179,33 @@ window.addEventListener('DOMContentLoaded', () => {
 			} else if (finish) {
 				input.value = a;
 				output.value = `${a} ${sign}`;
-				console.log(a, sign, b);
 			} else if (a !== '' && sign !== '') {
-				b = String(b).substring(0, String(b).length - 1)
+				b = String(b).substring(0, String(b).length - 1);
 				input.value = b;
 				output.value = `${a} ${sign} ${b}`;
-				console.log(a, sign, b);
 				if (b === '') {
 					b = '0'; 
 					input.value = b;
 					b = '';
 					output.value = `${a} ${sign} ${b}`;
-					console.log(a, sign, b);
 				}
 			}
 		}
 
-		// если нажата кнопка =
+		// if the pressed button "="
 		if (key === '=') {
 			if (a === '') {
 				clearAll();
-				return
+				return;
 			}else if (sign === '') {
 				input.value = a;
 				output.value = `${a}`;
-				console.log(a, sign, b);
 				return;
 			}else if (b === '') {
 				if (a === '0.') {
 					a = 0;
 				}else if (/\.0+$/.test(a)) {
-					a = a.substring(0, a.indexOf("."))
+					a = a.substring(0, a.indexOf("."));
 				}
 				b = a;
 			}
@@ -232,22 +214,18 @@ window.addEventListener('DOMContentLoaded', () => {
 			finish = true;
 			input.value = a;
 			output.value += ` = ${a}`;
-			console.log(a, sign, b);
 		}
 
-		// если нажата - + * /, но a && b && sign заполнены и предыдущая операция содержала =
-		if (a !== '' && b !== '' & sign !== '' && action.includes(key) && finish) {
-			console.log(b);
+		// if button - + * / is pressed, 'a' and 'b' and 'c' are filled in and the previous action was '='
+		if (a !== '' && b !== '' && sign !== '' && action.includes(key) && finish) {
 			b = '';
 			sign = key;
-			console.log(b);
 			finish = false;
 			input.value = a;
 			output.value = `${a} ${sign} ${b}`;
-			console.log(a, sign, b)
 		}
 
-		// если a && b && sign заполнены и нажата - + * /
+		// if "a", "b" and "c" are filled in and one of the "+ - * /" buttons is pressed
 		if (a !== '' && b !== '' & sign !== '' && action.includes(key) && !finish) {
 			a = executeOperation(a, b, sign);
 			finish = false;
@@ -255,10 +233,9 @@ window.addEventListener('DOMContentLoaded', () => {
 			b = '';
 			input.value = a;
 			output.value += ` = ${a}`
-			console.log(a, sign, b)
 		}
 
-		// если нажата кнопка '+/-'
+		// if the "+/-" button is pressed
 		if (key === '+/-') {
 			if (a === '') {
 				clearAll();
@@ -267,24 +244,21 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (a !== '' && b === '' ) {
 				a = -(a);
 				input.value = a;
-				console.log(a, sign, b);
 				output.value = `${a} ${sign} ${b}`;
 			}else if (a !== '' && b !== '' && !finish){
 				b = -(b);
 				input.value = b;
 				output.value = `${a} ${sign} ${b}`;
-				console.log(a, sign, b);
 			}
 		}
 
-		// если нажата кнопка '+/-' и предыдущее действие было '='
+		// if the "+/-" button is pressed and the previous action was "="
 		if (key === '+/-' && finish) {
 			a = -(a);
 			input.value = a;
-			console.log(a, sign, b);
 		}
 
-		// %
+		// % operation
 		if (key === '%') {
 			if (b === '' && sign === '') {
 				if (a === '') {
@@ -293,12 +267,10 @@ window.addEventListener('DOMContentLoaded', () => {
 				}
 				a = a / 100;
 				input.value = a;
-				console.log(a, sign, b);
 			}else if (a !== '' && sign !== '') {
 				output.value = `${a} ${sign} ${b}%`
 				b = a * b / 100;
 				input.value = parseFloat(Number(b).toFixed(5));
-				console.log(a, sign, b);
 			}
 		}
 	});

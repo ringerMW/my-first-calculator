@@ -59,6 +59,31 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	document.querySelector('.buttons .C').addEventListener('click', clearAll);
 
+	function executeOperatin(a, b, sign) {
+		switch (sign) {
+			case '+':
+				a = (+a) + (+b);
+				break;
+			case '-':
+				a = a - b;
+				break;
+			case 'X':
+				a = a * b;
+				break;
+			case '/':
+				if (b === '0') {
+					out.textContent = 'Error ';
+					a = '';
+					b = '';
+					sign = '';
+					return;
+				}
+				a = a / b;
+				break;
+		}
+		return a;
+	}
+
 	document.querySelector('.buttons').addEventListener('click', (event) => {
 		// The button is not pressed
 		if (!event.target.classList.contains('btn')) return;
@@ -74,14 +99,64 @@ window.addEventListener('DOMContentLoaded', () => {
 		// если нажата кнопка 0-9 или '.'
 		if (digit.includes(key)) {
 			if (b === '' && sign === '') {
+				if (a === '0' && key !== '.') { // first number zero + dot
+					a = key;
+					out.textContent = a;
+					console.log(a, sign, b);
+					return;
+				}else if (key === '.') {
+					if (!a.length) {
+						a = '0.';
+						out.textContent = a;
+						console.log(a, sign, b);
+						return;
+					}else if (a.includes('.')) {
+						out.textContent = a;
+						console.log(a, sign, b);
+						return;
+					}else
+					a += key;
+					out.textContent = a;
+					console.log(a, sign, b);
+					return;
+				}
 				a += key;
 				out.textContent = a;
 			}else if (a !== '' && b !== '' && finish) {
+				if (key === '.') {
+					b = '0.';
+					finish = false;
+					out.textContent = b;
+					console.log(a, sign, b);
+					return;
+				}
 				b = key;
 				finish = false;
 				out.textContent = b;
 			}else {
+				if (b === '0'  && key !== '.') { // first number zero + dot
+					b = key;
+					out.textContent = b;
+					console.log(a, sign, b);
+					return;
+				}else if (key === '.') {
+					if (!b.length) {
+						b = '0.';
+						out.textContent = b;
+						console.log(a, sign, b);
+						return;
+					}else if (b.includes('.')) {
+						out.textContent = b;
+						console.log(a, sign, b);
+						return;
+					}else
+					b += key;
+					out.textContent = b;
+					console.log(a, sign, b);
+					return;
+				}
 				b += key;
+				finish = false;
 				out.textContent = b;
 			}
 			console.log(a, sign, b);
@@ -89,30 +164,37 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		// если нажата кнопка + - / *
-		if (action.includes(key) && sign === '') {
+		if (action.includes(key) && b === '') {
 			if (a === '') {
 				clearAll();
 				return
 			}
 			sign = key;
 			out.textContent = a;
+			console.log(a, sign, b);
 			return
 		}
 		// удаление последнего символа
 		if (key === 'del'){
-			if (b === '' && sign === '') {
-				a = a.substring(0, a.length - 1)
+			if (b === '' && sign === '' && !finish) {
+				a = String(a).substring(0, String(a).length - 1)
 				console.log(a, sign, b);
 				out.textContent = a;
 				if (a === '') {
 					clearAll();
 				}
-			} else if (b !== '') {
-				b = b.substring(0, b.length - 1)
+			} else if (finish) {
+				out.textContent = a;
+				console.log(a, sign, b);
+			} else if (a !== '' && sign !== '') {
+				b = String(b).substring(0, String(b).length - 1)
 				out.textContent = b;
 				console.log(a, sign, b);
 				if (b === '') {
-					b = ''; // <- временная bug-a
+					b = '0'; // <- временная bug-a
+					out.textContent = b;
+					b = '';
+					console.log(a, sign, b);
 				}
 			}
 		}
@@ -123,30 +205,17 @@ window.addEventListener('DOMContentLoaded', () => {
 				clearAll();
 				return
 			}
-			if (b === '') b = a;
-			switch (sign) {
-				case '+':
-					a = (+a) + (+b);
-					break;
-				case '-':
-					a = a - b;
-					break;
-				case 'X':
-					a = a * b;
-					break;
-				case '/':
-					if (b === '0') {
-						out.textContent = 'Error ';
-						a = '';
-						b = '';
-						sign = '';
-						return;
-					}
-					a = a / b;
-					break;
+			if (b === '') {
+				if (a === '0.') {
+					a = 0;
+				}else if (/\.0+$/.test(a)) {
+					a = a.substring(0, a.indexOf("."))
+				}
+				b = a;
 			}
+			a = executeOperation(a, b, sign);
 			finish = true;
-			out.textContent = a;
+			out.textContent = parseFloat(Number(a).toFixed(5));
 			console.log(a, sign, b);
 		}
 
@@ -163,30 +232,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		// если a && b && sign заполнены и нажата - + * /
 		if (a !== '' && b !== '' & sign !== '' && action.includes(key) && !finish) {
-			switch (sign) {
-				case '+':
-					a = (+a) + (+b);
-					break;
-				case '-':
-					a = a - b;
-					break;
-				case 'X':
-					a = a * b;
-					break;
-				case '/':
-					if (b === '0') {
-						out.textContent = 'Error ';
-						a = '';
-						b = '';
-						sign = '';
-						return;
-					}
-					a = a / b;
-					break;
-			}
+			a = executeOperation(a, b, sign);
 			finish = false;
 			b = '';
-			out.textContent = a;
+			out.textContent = parseFloat(Number(a).toFixed(5));
 			sign = key;
 			console.log(a, sign, b)
 		}
@@ -224,13 +273,15 @@ window.addEventListener('DOMContentLoaded', () => {
 				}
 				a = a / 100;
 				out.textContent = a;
+				finish = true;
 				console.log(a, sign, b);
 			}else if (a !== '' && sign !== '') {
 				b = a * b / 100;
 				out.textContent = b;
+				finish = true;
 				console.log(a, sign, b);
 			}
 		}
 	});
-	
+
 });

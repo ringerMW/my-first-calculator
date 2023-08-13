@@ -57,3 +57,6 @@ open the file `index.html ` - enjoy!
 
 ###
 
+<h2 align="left">Contributing</h2>
+If you want to contribute to this project and make it better with new ideas, your pull request is very welcomed. If you find any issue just put it in the repository issue section!🔥
+###

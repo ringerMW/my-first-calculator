@@ -214,8 +214,12 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (a === '') {
 				clearAll();
 				return
-			}
-			if (b === '') {
+			}else if (sign === '') {
+				input.value = a;
+				output.value = `${a}`;
+				console.log(a, sign, b);
+				return;
+			}else if (b === '') {
 				if (a === '0.') {
 					a = 0;
 				}else if (/\.0+$/.test(a)) {

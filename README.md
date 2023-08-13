@@ -14,6 +14,8 @@
 
 <p align="left">A very basic calculator application created using HTML/ CSS/ Javascript.</p>
 
+[![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+
 ###
 
 <div align="left">

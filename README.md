@@ -31,7 +31,8 @@
 ###
 
 <div align="center">
-  <img height="500" src="https://github.com/ringerMW/my-first-calculator/blob/main/img/screen_one.png?raw=true"  />
+  <img height="500" src="https://github.com/ringerMW/my-first-calculator/blob/main/img/screen_one.png?raw=true"/>
+  <img height="500" src="https://github.com/ringerMW/my-first-calculator/blob/main/img/screen_two.png?raw=true"/>
 </div>
 
 ###

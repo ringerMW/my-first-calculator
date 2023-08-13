@@ -54,16 +54,30 @@ body {
 }
 
 .calc_screen {
+  position: relative;
   display: flex;
-  align-items:center;
-  justify-content:end;
+  flex-direction: column;
+  justify-content: space-evenly;
   height: 100px;
-  width: 100%;
-  text-align: right;
-  font-size: 30px;
-  color: #fff;
+  width: auto;
   pointer-events: none;
   user-select: none;
+}
+
+.calc_screen input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  color: #8e8e8e;
+  background: none;
+  text-align: right;
+}
+
+input#input {
+  font-size: 30px;
+  color: #fff;
 }
 
 .buttons {  

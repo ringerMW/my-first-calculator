@@ -46,7 +46,9 @@ window.addEventListener('DOMContentLoaded', () => {
 	const otherAction = ['%', '+/-', '/', 'X', '-', '+', '='];
 
 	// Сalc display 
-	const out = document.querySelector('.calc_screen p');
+	const input = document.getElementById('input'),
+		  output = document.getElementById('output');
+
 
 	// Clear all - button 'C'
 	function clearAll() {
@@ -54,12 +56,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		b = ''; // second number
 		sign = ''; // sign operator
 		finish = false; // 
-		out.textContent = 0; // display content
+		input.value = 0; // display content
+		output.value = '';
 	}
 
 	document.querySelector('.buttons .C').addEventListener('click', clearAll);
 
-	function executeOperatin(a, b, sign) {
+	function executeOperation(a, b, sign) {
 		switch (sign) {
 			case '+':
 				a = (+a) + (+b);
@@ -72,7 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				break;
 			case '/':
 				if (b === '0') {
-					out.textContent = 'Error ';
+					input.value = 'Error ';
 					a = '';
 					b = '';
 					sign = '';
@@ -81,7 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				a = a / b;
 				break;
 		}
-		return a;
+		return parseFloat(Number(a).toFixed(5));
 	}
 
 	document.querySelector('.buttons').addEventListener('click', (event) => {
@@ -90,7 +93,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		// The button is pressed - Clear All 'C'
 		if (event.target.classList.contains('C')) return;
 
-		out.textContent = '';
+		input.value = '';
 
 		// Get the pressed button
 		const key = event.target.textContent;
@@ -101,63 +104,65 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (b === '' && sign === '') {
 				if (a === '0' && key !== '.') { // first number zero + dot
 					a = key;
-					out.textContent = a;
+					input.value = a;
+					output.value = `${a} ${sign} ${b}`;
 					console.log(a, sign, b);
 					return;
 				}else if (key === '.') {
 					if (!a.length) {
 						a = '0.';
-						out.textContent = a;
+						input.value = a;
+						output.value = `${a} ${sign} ${b}`;
 						console.log(a, sign, b);
 						return;
 					}else if (a.includes('.')) {
-						out.textContent = a;
+						input.value = a;
+						output.value = `${a} ${sign} ${b}`;
 						console.log(a, sign, b);
 						return;
-					}else
-					a += key;
-					out.textContent = a;
-					console.log(a, sign, b);
-					return;
+					}
 				}
 				a += key;
-				out.textContent = a;
+				output.value = `${a} `;
+				input.value = a;
 			}else if (a !== '' && b !== '' && finish) {
 				if (key === '.') {
 					b = '0.';
 					finish = false;
-					out.textContent = b;
+					input.value = b;
+					output.value = `${a} ${sign} ${b}`;
 					console.log(a, sign, b);
 					return;
 				}
 				b = key;
 				finish = false;
-				out.textContent = b;
+				input.value = b;
+				output.value = `${a} ${sign} ${b}`;
 			}else {
 				if (b === '0'  && key !== '.') { // first number zero + dot
 					b = key;
-					out.textContent = b;
+					input.value = b;
+					output.value = `${a} ${sign} ${b}`;
 					console.log(a, sign, b);
 					return;
 				}else if (key === '.') {
 					if (!b.length) {
 						b = '0.';
-						out.textContent = b;
+						input.value = b;
+						output.value = `${a} ${sign} ${b}`;
 						console.log(a, sign, b);
 						return;
 					}else if (b.includes('.')) {
-						out.textContent = b;
+						input.value = b;
+						output.value = `${a} ${sign} ${b}`;
 						console.log(a, sign, b);
 						return;
-					}else
-					b += key;
-					out.textContent = b;
-					console.log(a, sign, b);
-					return;
+					}
 				}
 				b += key;
 				finish = false;
-				out.textContent = b;
+				input.value = b;
+				output.value = `${a} ${sign} ${b}`;
 			}
 			console.log(a, sign, b);
 			return;
@@ -170,7 +175,8 @@ window.addEventListener('DOMContentLoaded', () => {
 				return
 			}
 			sign = key;
-			out.textContent = a;
+			input.value = a;
+			output.value = `${a} ${sign} ${b}`;
 			console.log(a, sign, b);
 			return
 		}
@@ -179,21 +185,25 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (b === '' && sign === '' && !finish) {
 				a = String(a).substring(0, String(a).length - 1)
 				console.log(a, sign, b);
-				out.textContent = a;
+				input.value = a;
+				output.value = `${a} ${sign} ${b}`;
 				if (a === '') {
 					clearAll();
 				}
 			} else if (finish) {
-				out.textContent = a;
+				input.value = a;
+				output.value = `${a} ${sign}`;
 				console.log(a, sign, b);
 			} else if (a !== '' && sign !== '') {
 				b = String(b).substring(0, String(b).length - 1)
-				out.textContent = b;
+				input.value = b;
+				output.value = `${a} ${sign} ${b}`;
 				console.log(a, sign, b);
 				if (b === '') {
-					b = '0'; // <- временная bug-a
-					out.textContent = b;
+					b = '0'; 
+					input.value = b;
 					b = '';
+					output.value = `${a} ${sign} ${b}`;
 					console.log(a, sign, b);
 				}
 			}
@@ -213,9 +223,11 @@ window.addEventListener('DOMContentLoaded', () => {
 				}
 				b = a;
 			}
+			output.value = `${a} ${sign} ${parseFloat(Number(b).toFixed(5))}`;
 			a = executeOperation(a, b, sign);
 			finish = true;
-			out.textContent = parseFloat(Number(a).toFixed(5));
+			input.value = a;
+			output.value += ` = ${a}`;
 			console.log(a, sign, b);
 		}
 
@@ -226,7 +238,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			sign = key;
 			console.log(b);
 			finish = false;
-			out.textContent = a;
+			input.value = a;
+			output.value = `${a} ${sign} ${b}`;
 			console.log(a, sign, b)
 		}
 
@@ -234,9 +247,10 @@ window.addEventListener('DOMContentLoaded', () => {
 		if (a !== '' && b !== '' & sign !== '' && action.includes(key) && !finish) {
 			a = executeOperation(a, b, sign);
 			finish = false;
-			b = '';
-			out.textContent = parseFloat(Number(a).toFixed(5));
 			sign = key;
+			b = '';
+			input.value = a;
+			output.value += ` = ${a}`
 			console.log(a, sign, b)
 		}
 
@@ -246,13 +260,15 @@ window.addEventListener('DOMContentLoaded', () => {
 				clearAll();
 				return
 			}
-			if (a !== '' && b === '') {
+			if (a !== '' && b === '' ) {
 				a = -(a);
-				out.textContent = a;
+				input.value = a;
 				console.log(a, sign, b);
-			}else if (a !== '' && b !== '' ){
+				output.value = `${a} ${sign} ${b}`;
+			}else if (a !== '' && b !== '' && !finish){
 				b = -(b);
-				out.textContent = b;
+				input.value = b;
+				output.value = `${a} ${sign} ${b}`;
 				console.log(a, sign, b);
 			}
 		}
@@ -260,7 +276,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		// если нажата кнопка '+/-' и предыдущее действие было '='
 		if (key === '+/-' && finish) {
 			a = -(a);
-			out.textContent = a;
+			input.value = a;
 			console.log(a, sign, b);
 		}
 
@@ -272,13 +288,12 @@ window.addEventListener('DOMContentLoaded', () => {
 					return
 				}
 				a = a / 100;
-				out.textContent = a;
-				finish = true;
+				input.value = a;
 				console.log(a, sign, b);
 			}else if (a !== '' && sign !== '') {
+				output.value = `${a} ${sign} ${b}%`
 				b = a * b / 100;
-				out.textContent = b;
-				finish = true;
+				input.value = parseFloat(Number(b).toFixed(5));
 				console.log(a, sign, b);
 			}
 		}

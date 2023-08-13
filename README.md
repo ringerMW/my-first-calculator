@@ -16,7 +16,7 @@
 
 ###
 
-<div align="right">
+<div align="left">
   <img src="https://skillicons.dev/icons?i=html" height="40" alt="html5 logo"  />
   <img width="12" />
   <img src="https://skillicons.dev/icons?i=css" height="40" alt="css3 logo"  />
@@ -37,7 +37,7 @@
 
 ###
 
-<h3 align="left">Get started</h3>
+<h2 align="left">Get started</h2>
 
 ###
 

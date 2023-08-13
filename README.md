@@ -12,7 +12,7 @@
 
 ###
 
-<p align="left">A very basic calculator application created using HTML/ CSS/ Javascript.</p>
+<p align="left">Calculator application created using HTML/ CSS/ Javascript.</p>
 
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
